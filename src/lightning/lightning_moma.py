@@ -194,7 +194,7 @@ class PL_MOMA(pl.LightningModule):
                 self.logger.experiment.add_scalar(log_title+'/conf_', batch['loss_scalars']['conf_'+str(layer_index)],self.global_step)
 
             # net-params
-            if self.config.ADAMATCHER.MATCH_COARSE.MATCH_TYPE == "sinkhorn":
+            if self.config.MOMAMATCHER.MATCH_COARSE.MATCH_TYPE == "sinkhorn":
                 self.logger.experiment.add_scalar(
                     f"skh_bin_score",
                     self.matcher.coarse_matching.bin_score.clone().detach().cpu().data,

@@ -9,12 +9,12 @@ from src.config.default import get_cfg_defaults
 from src.momamatcher import MOMAMatcher
 from src.utils.misc import lower_config
 from src.utils import viz2d
-
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 def get_args():
     import argparse
 
     parser = argparse.ArgumentParser("test quadtree attention-based feature matching")
-    parser.add_argument("--weight_path", default="./densematching/version_19/checkpoints/epoch=2-auc@5=0.498-auc@10=0.666-auc@20=0.793.ckpt", 
+    parser.add_argument("--weight_path", default="./OUTPUT/densematching/AdaMatcher-640-bs2/version_19/checkpoints/epoch=2-auc@5=0.498-auc@10=0.666-auc@20=0.793.ckpt", 
                         type=str)
     parser.add_argument("--config_path", default="./configs/loftr/outdoor/loftr_ds_dense.py")
     parser.add_argument("--data_dir", default="./dataset/sunyatsen/3_auditorium/images/",
@@ -89,7 +89,7 @@ def main():
         axes = viz2d.plot_images([query_image, ref_image])
         viz2d.plot_matches(query_kpts, ref_kpts, color="lime", lw=0.2)
         viz2d.add_text(0, f'matches = {num_matches}', fs=20)
-        viz2d.save_plot(os.path.join(args.output_dir, "-".join(["adamatcher_new_", name0.split("/")[-1], name1.split("/")[-1]])))
+        viz2d.save_plot(os.path.join(args.output_dir, "-".join(["momamatcher_", name0.split("/")[-1], name1.split("/")[-1]])))
 """
     def _np_to_cv2_kpts(np_kpts):
         cv2_kpts = []
