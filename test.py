@@ -6,7 +6,7 @@ from loguru import logger as loguru_logger
 
 from src.config.default import get_cfg_defaults
 from src.lightning.data import MultiSceneDataModule
-from src.lightning.lightning_adamatcher import PL_AdaMatcher
+from src.lightning.lightning_momamatcher import PL_MOMA
 from src.utils.profiler import build_profiler
 
 
@@ -64,19 +64,19 @@ if __name__ == '__main__':
 
     # tune when testing
     if args.thr is not None:
-        config.ADAMATCHER.MATCH_COARSE.THR = args.thr
+        config.MOMAMATCHER.MATCH_COARSE.THR = args.thr
 
     loguru_logger.info(f'Args and config initialized!')
 
     # lightning module
     profiler = build_profiler(args.profiler_name)
-    model = PL_AdaMatcher(
+    model = PL_MOMA(
         config,
         pretrained_ckpt=args.ckpt_path,
         profiler=profiler,
         dump_dir=args.dump_dir,
     )
-    loguru_logger.info(f'AdaMatcher-lightning initialized!')
+    loguru_logger.info(f'MOMAMatcher-lightning initialized!')
 
     # lightning data
     data_module = MultiSceneDataModule(args, config)
